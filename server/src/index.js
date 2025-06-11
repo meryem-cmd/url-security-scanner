@@ -55,7 +55,7 @@ app.post("/test-url", (req, res) => {
   const { url } = req.body;
   const scriptPath = path.join(__dirname, "scanner", "sqli_tester.py");
 
-  execFile("py", [scriptPath, url], (err, stdout, stderr) => {
+  execFile("python3", [scriptPath, url], (err, stdout, stderr) => {
     if (err) {
       console.error("Python error:", stderr || err);
       return res.status(500).json({ error: stderr || err.message });
