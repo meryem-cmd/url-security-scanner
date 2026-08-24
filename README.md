@@ -1,6 +1,7 @@
 
 <!-- //py sqli_tester.py -->
-<!-- //py sqli_tester.py --># URL Security Scanner
+<!-- //py sqli_tester.py -->
+## URL Security Scanner
 
 A web-based SQL injection vulnerability scanner built as an Information Security project. Submit any URL and receive an instant, categorised report of detected SQLi payloads, complete with severity tiers and a downloadable HTML report.
 
