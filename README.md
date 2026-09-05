@@ -1,38 +1,41 @@
+# URL Security Scanner
 
-<!-- //py sqli_tester.py -->
-<!-- //py sqli_tester.py -->
-## URL Security Scanner
+> A full-stack web tool for detecting SQL injection vulnerabilities in target URLs, built as an Information Security course project.
 
-A web-based SQL injection vulnerability scanner built as an Information Security project. Submit any URL and receive an instant, categorised report of detected SQLi payloads, complete with severity tiers and a downloadable HTML report.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=flat-square&logo=vercel)](https://url-security-scanner-gilt.vercel.app)
+![Node.js](https://img.shields.io/badge/Node.js-v18+-green?style=flat-square&logo=node.js)
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square&logo=python)
+![Express](https://img.shields.io/badge/Express-5-lightgrey?style=flat-square&logo=express)
 
+---
 
-## Overview
+## What It Does
 
-URL Security Scanner is a full-stack web application that takes a target URL, passes it to a Python-based SQLi testing script on the backend, and presents the results in a clean, severity-grouped interface. Results are organised into three tiers — **Most Critical**, **Moderate**, and **Least Critical** — and can be exported as a standalone HTML report.
+Submit any URL and the scanner runs a battery of SQL injection payloads against it. Results are grouped by severity — **Most Critical**, **Moderate**, and **Least Critical** — and rendered in a clean, interactive interface. You can expand each category to inspect individual payloads and export the full findings as a self-contained HTML report.
 
 ---
 
 ## Features
 
-- **SQL Injection Testing** — runs a Python scanner (`sqli_tester.py`) against the submitted URL
-- **Severity Classification** — payloads are categorised into Most Critical, Moderate, and Least Critical
-- **Expandable Payload Lists** — toggle each category open/closed to inspect individual payloads and the URLs they were found at
-- **Downloadable HTML Report** — generates a self-contained, themed HTML file for offline review
+- **SQL Injection Testing** — invokes a Python-based scanner (`sqli_tester.py`) on the submitted URL
+- **Severity Classification** — payloads bucketed into three tiers for quick triage
+- **Expandable Results** — drill into each category to see the exact payload and the URL it triggered on
+- **Downloadable HTML Report** — generates a themed, offline-ready report file
 - **Dark / Light Theme** — persists across sessions via `localStorage`
-- **URL Validation** — enforces `http://` or `https://` protocol before submission
-- **Real-time Scan Feedback** — spinner and status badge update live during the scan
+- **URL Validation** — rejects inputs missing `http://` or `https://` before the scan starts
+- **Live Scan Feedback** — spinner and status badge update in real time
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | HTML5, CSS3, Vanilla JavaScript |
-| Backend | Node.js, Express 5, ES Modules |
-| Scanner | Python (via `child_process.execFile`) |
-| Database | MongoDB + Mongoose (scaffolded, optional) |
-| Dev Tooling | nodemon, dotenv |
+| Layer      | Technology                             |
+|------------|----------------------------------------|
+| Frontend   | HTML5, CSS3, Vanilla JavaScript        |
+| Backend    | Node.js · Express 5 · ES Modules       |
+| Scanner    | Python (spawned via `child_process`)   |
+| Database   | MongoDB + Mongoose *(scaffolded)*      |
+| Dev Tools  | nodemon · dotenv                       |
 
 ---
 
@@ -41,102 +44,70 @@ URL Security Scanner is a full-stack web application that takes a target URL, pa
 ```
 url-scanner-ISProj/
 ├── client/
-│   ├── index.html          # Single-page frontend
-│   ├── script.js           # Scan logic, UI state, report generation
-│   └── styles.css          # Dark/light theme styles
+│   ├── index.html       # Single-page frontend
+│   ├── script.js        # Scan logic, UI state, report generation
+│   └── styles.css       # Dark / light theme styles
 └── server/
     ├── src/
-    │   ├── index.js        # Express app entry point (POST /test-url)
-    │   ├── constants.js    # DB name constant
+    │   ├── index.js     # Express entry point — POST /test-url
+    │   ├── constants.js # DB name constant
     │   └── db/
-    │       └── index.js    # Mongoose connection helper
+    │       └── index.js # Mongoose connection helper
     ├── package.json
-    └── .env                # Environment variables (not committed)
+    └── .env             # Environment variables (not committed)
 ```
 
-> The Python scanner (`src/scanner/sqli_tester.py`) is invoked by the backend but is not included in the repository listing above — it must be present at that path for scans to run.
-
----
-
-## Prerequisites
-
-- **Node.js** v18 or later
-- **Python** available on your system as `py` (Windows) or adjust the `execFile` call in `index.js` to use `python3`
-- `sqli_tester.py` placed at `server/src/scanner/sqli_tester.py`
-- (Optional) A MongoDB Atlas connection string if you want to enable the database layer
+> **Note:** The Python scanner (`server/src/scanner/sqli_tester.py`) must be present for scans to run. It is not included in this repository.
 
 ---
 
 ## Getting Started
 
-### 1. Clone the repository
+### Prerequisites
+
+- Node.js v18 or later
+- Python available as `py` (Windows) or `python3` (macOS/Linux — update `execFile` in `index.js` accordingly)
+- `sqli_tester.py` placed at `server/src/scanner/sqli_tester.py`
+- *(Optional)* A MongoDB Atlas URI if you want to enable result persistence
+
+### Installation
 
 ```bash
-git clone <your-repo-url>
-cd url-scanner-ISProj
-```
+# 1. Clone the repo
+git clone https://github.com/meryem-cmd/url-security-scanner.git
+cd url-security-scanner
 
-### 2. Install server dependencies
-
-```bash
+# 2. Install server dependencies
 cd server
 npm install
-```
 
-### 3. Configure environment variables
+# 3. Configure environment variables
+cp .env.example .env   # then fill in values
 
-Create or update `server/.env` (see [Environment Variables](#environment-variables) below).
+# 4. Start the backend
+npm run dev            # runs on http://localhost:5000
 
-### 4. Start the backend
-
-```bash
-npm run dev
-```
-
-The server starts on **port 5000** by default.
-
-### 5. Open the frontend
-
-Open `client/index.html` directly in your browser, or serve it with any static file server:
-
-```bash
-# Example using Python's built-in server from the client/ directory
+# 5. Open the frontend
+cd ../client
 python3 -m http.server 3000
+# then visit http://localhost:3000
 ```
 
-Then visit `http://localhost:3000`.
+### Environment Variables
 
----
-
-## Environment Variables
-
-Create `server/.env` with the following keys:
+Create `server/.env`:
 
 ```env
 PORT=5000
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net
 ```
 
-| Variable | Description |
-|---|---|
-| `PORT` | Port the Express server listens on (default `5000`) |
-| `MONGODB_URI` | MongoDB connection string (required only if the DB layer is enabled) |
+| Variable      | Description                                              |
+|---------------|----------------------------------------------------------|
+| `PORT`        | Port the Express server listens on (default `5000`)      |
+| `MONGODB_URI` | MongoDB connection string (only needed if DB is enabled) |
 
-> **Never commit `.env` to version control.** It is already listed in `.gitignore`.
-
----
-
-## Usage
-
-1. Open the frontend in your browser.
-2. Enter a full URL (must start with `http://` or `https://`).
-3. Click **Scan Now**.
-4. Wait for the scan to complete — the spinner indicates activity.
-5. Review the status badge:
-   - ✅ **Safe** — no payloads detected
-   - ❌ **Vulnerable** — one or more payloads detected
-6. Expand any severity category to view individual payloads and the URLs they triggered on.
-7. Click **📥 Download Report** to save a themed HTML report to your machine.
+> `.env` is listed in `.gitignore` — never commit it.
 
 ---
 
@@ -144,34 +115,55 @@ MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net
 
 ```
 Browser  →  POST /test-url  →  Express (Node.js)
-                                     ↓
-                           execFile('py', ['sqli_tester.py', url])
-                                     ↓
-                           Python scanner runs payloads against target URL
-                                     ↓
-                           stdout returned to Express
-                                     ↓
-             { result, report }  ←  JSON response
-                                     ↓
-                           Frontend parses lines, groups by severity
-                           Renders UI + enables report download
+                                      ↓
+                            execFile('py', ['sqli_tester.py', url])
+                                      ↓
+                            Python scanner fires payloads at target URL
+                                      ↓
+                            stdout piped back to Express
+                                      ↓
+              { result, report }  ←  JSON response
+                                      ↓
+                            Frontend parses lines, groups by severity
+                            Renders UI + enables report download
 ```
 
 The Python script outputs findings in a structured text format. The frontend parser looks for `Payloads:` headers and `- Payload:` / `URL:` pairs to populate the severity buckets.
 
 ---
 
-## Security Notice
+## Usage
 
-This tool is intended for **authorised security testing only**. Scanning URLs without explicit permission from the target owner is illegal in most jurisdictions. Always obtain proper authorisation before running any security assessment.
-
-Additionally, the current backend passes user-supplied input directly to `execFile` as a script argument. In a production environment, you should validate and sanitise the URL server-side before passing it to the scanner.
+1. Open the frontend in your browser.
+2. Enter a full URL beginning with `http://` or `https://`.
+3. Click **Scan Now** and wait for the spinner to finish.
+4. Check the status badge:
+   - ✅ **Safe** — no SQLi payloads detected
+   - ❌ **Vulnerable** — one or more payloads triggered
+5. Expand any severity tier to inspect individual payloads.
+6. Click **📥 Download Report** to save a themed HTML report locally.
 
 ---
 
 ## Known Limitations
 
-- The Python interpreter is invoked as `py` (Windows convention). On macOS/Linux, update `index.js` to use `python3`.
-- The MongoDB database connection is scaffolded but not actively used in the current version — scan results are not persisted.
-- The frontend connects to `http://localhost:5000` — this must be updated if the backend is deployed remotely.
-- No authentication or rate limiting is implemented on the `/test-url` endpoint.
+| Limitation | Detail |
+|---|---|
+| Python path | Hardcoded as `py` (Windows). Change to `python3` for macOS/Linux. |
+| No persistence | MongoDB is scaffolded but not wired up — scan results are not saved. |
+| Local frontend | Frontend points to `http://localhost:5000`; update this for remote deployment. |
+| No auth / rate limiting | The `/test-url` endpoint is open with no throttling. |
+
+---
+
+## Security Notice
+
+This tool is designed for **authorised security testing only**. Running scans against URLs without explicit permission from the target owner is illegal in most jurisdictions. Always obtain proper authorisation before conducting any security assessment.
+
+The current backend passes user input directly to `execFile` as a script argument. Before deploying to a production environment, validate and sanitise all user-supplied input server-side.
+
+---
+
+## License
+
+This project was built as an academic Information Security assignment. Refer to the repository for licensing details.
